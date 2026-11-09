@@ -1,6 +1,6 @@
 # Getting started
 
-Use CMake 3.25 or newer and a compiler with C++23 mode and a compatible standard library. CMake checks `if consteval`, `std::span`, and a ranges algorithm during configuration. The GitHub Actions workflow is configured for GCC 14 on Ubuntu 24.04 and MSVC from Visual Studio 2022 on Windows Server 2025.
+Use CMake 3.25 or newer and a compiler with C++23 mode and a compatible standard library. CMake checks `if consteval`, `std::span`, and a ranges algorithm during configuration. The GitHub Actions workflow uses GCC 14 on Ubuntu 24.04 and MSVC from Visual Studio 2026 on Windows Server 2025.
 
 ## Linux with GCC
 
@@ -14,15 +14,15 @@ ctest --test-dir build --output-on-failure --no-tests=error
 
 ## Windows with MSVC
 
-Install Visual Studio 2022 17.14 or later with **Desktop development with C++** and CMake. Run these commands from Developer PowerShell for VS 2022.
+Install Visual Studio 2026 with **Desktop development with C++** and CMake 4.2 or newer. Run these commands from Developer PowerShell for Visual Studio.
 
 ```powershell
-cmake -S . -B build-msvc -G 'Visual Studio 17 2022' -A x64
+cmake -S . -B build-msvc -G 'Visual Studio 18 2026' -A x64
 cmake --build build-msvc --config Release --parallel
 ctest --test-dir build-msvc -C Release --output-on-failure --no-tests=error
 ```
 
-Visual Studio is a multi-configuration generator. Its Release executables are under `build-msvc/Release/`.
+For Visual Studio 2022 17.14 or later, use the `Visual Studio 17 2022` generator. Visual Studio is a multi-configuration generator. Its Release executables are under `build-msvc/Release/`.
 
 ## Windows with GCC
 

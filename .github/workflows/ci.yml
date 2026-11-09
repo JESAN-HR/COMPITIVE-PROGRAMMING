@@ -19,8 +19,8 @@ jobs:
             os: ubuntu-24.04
             configure_args: -DCMAKE_CXX_COMPILER=g++-14 -DCMAKE_BUILD_TYPE=Release
           - toolchain: Windows · MSVC
-            os: windows-2025
-            configure_args: -G "Visual Studio 17 2022" -A x64
+            os: windows-2025-vs2026
+            configure_args: -G "Visual Studio 18 2026" -A x64
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     steps:
