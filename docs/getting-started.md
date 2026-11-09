@@ -4,7 +4,7 @@ Use CMake 3.25 or newer and a compiler with C++23 mode and a compatible standard
 
 ## Linux with GCC
 
-On Ubuntu 24.04, install `cmake` and `g++-14` through the package manager. From the repository root, run:
+On Ubuntu 24.04, install `cmake` and `g++-14` with `sudo apt install cmake g++-14`. Run these commands from the repository root.
 
 ```bash
 cmake -S . -B build -DCMAKE_CXX_COMPILER=g++-14 -DCMAKE_BUILD_TYPE=Release
@@ -14,7 +14,7 @@ ctest --test-dir build --output-on-failure --no-tests=error
 
 ## Windows with MSVC
 
-Install Visual Studio 2022 17.14 or later with **Desktop development with C++** and CMake. Open Developer PowerShell for VS 2022, then run:
+Install Visual Studio 2022 17.14 or later with **Desktop development with C++** and CMake. Run these commands from Developer PowerShell for VS 2022.
 
 ```powershell
 cmake -S . -B build-msvc -G 'Visual Studio 17 2022' -A x64
@@ -23,6 +23,18 @@ ctest --test-dir build-msvc -C Release --output-on-failure --no-tests=error
 ```
 
 Visual Studio is a multi-configuration generator. Its Release executables are under `build-msvc/Release/`.
+
+## Windows with GCC
+
+The Windows GCC build was verified with the portable WinLibs GCC 15.2.0 UCRT bundle, which includes CMake and Ninja. After extracting it, substitute your path to `mingw64\bin` below. The PATH change applies to the current PowerShell session. [WinLibs release](https://github.com/brechtsanders/winlibs_mingw/releases/tag/15.2.0posix-14.0.0-ucrt-r7)
+
+```powershell
+$env:Path = "C:\path\to\mingw64\bin;$env:Path"
+cmake -S . -B build-gcc -G Ninja -DCMAKE_CXX_COMPILER=g++ -DCMAKE_BUILD_TYPE=Release
+cmake --build build-gcc --parallel
+ctest --test-dir build-gcc --output-on-failure --no-tests=error
+.\build-gcc\algorithms_demo.exe
+```
 
 ## Troubleshooting
 
