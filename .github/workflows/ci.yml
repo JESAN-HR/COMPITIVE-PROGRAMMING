@@ -1,0 +1,32 @@
+name: C++23 CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.toolchain }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - toolchain: Linux · GCC 14
+            os: ubuntu-24.04
+            configure_args: -DCMAKE_CXX_COMPILER=g++-14 -DCMAKE_BUILD_TYPE=Release
+          - toolchain: Windows · MSVC
+            os: windows-2025
+            configure_args: -G "Visual Studio 17 2022" -A x64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - run: cmake -S . -B build ${{ matrix.configure_args }}
+      - run: cmake --build build --config Release --parallel
+      - run: ctest --test-dir build -C Release --output-on-failure --no-tests=error
